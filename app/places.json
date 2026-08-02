@@ -1,0 +1,202 @@
+[
+  {
+    "name": "Petra",
+    "location": "Ma'an Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.9,
+    "image_url": "https://images.unsplash.com/photo-1579606039800-4740e53a2ef5",
+    "country": "Jordan"
+  },
+  {
+    "name": "Jerash Archaeological Site",
+    "location": "Jerash Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.8,
+    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada",
+    "country": "Jordan"
+  },
+  {
+    "name": "Amman Citadel",
+    "location": "Amman Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1580834341580-8c19a9a331e8",
+    "country": "Jordan"
+  },
+  {
+    "name": "Roman Theater Amman",
+    "location": "Amman Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.6,
+    "image_url": "https://images.unsplash.com/photo-1565008447742-97f6f38c985c",
+    "country": "Jordan"
+  },
+  {
+    "name": "Ajloun Castle",
+    "location": "Ajloun Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
+    "country": "Jordan"
+  },
+  {
+    "name": "Umm Qais (Gadara)",
+    "location": "Irbid Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.8,
+    "image_url": "https://images.unsplash.com/photo-1518684079-3c830dcef090",
+    "country": "Jordan"
+  },
+  {
+    "name": "Kerak Castle",
+    "location": "Karak Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7",
+    "country": "Jordan"
+  },
+  {
+    "name": "Shobak Castle",
+    "location": "Ma'an Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.5,
+    "image_url": "https://images.unsplash.com/photo-1599946347371-68eb71b16afc",
+    "country": "Jordan"
+  },
+  {
+    "name": "Pella (Tabaqat Fahl)",
+    "location": "Irbid Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.6,
+    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+    "country": "Jordan"
+  },
+  {
+    "name": "Little Petra (Siq al-Barid)",
+    "location": "Ma'an Governorate",
+    "type": "Historical & Archaeological Tourism",
+    "rating": 4.8,
+    "image_url": "https://images.unsplash.com/photo-1579606039800-4740e53a2ef5",
+    "country": "Jordan"
+  },
+  {
+    "name": "Dead Sea Coast",
+    "location": "Balqa Governorate",
+    "type": "Medical & Wellness Tourism",
+    "rating": 4.9,
+    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    "country": "Jordan"
+  },
+  {
+    "name": "Ma'in Hot Springs",
+    "location": "Madaba Governorate",
+    "type": "Medical & Wellness Tourism",
+    "rating": 4.8,
+    "image_url": "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
+    "country": "Jordan"
+  },
+  {
+    "name": "Afra Hot Springs",
+    "location": "Tafilah Governorate",
+    "type": "Medical & Wellness Tourism",
+    "rating": 4.5,
+    "image_url": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
+    "country": "Jordan"
+  },
+  {
+    "name": "Mount Nebo",
+    "location": "Madaba Governorate",
+    "type": "Religious & Biblical Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1563822249548-9a72b6353cd1",
+    "country": "Jordan"
+  },
+  {
+    "name": "Bethany Beyond the Jordan",
+    "location": "Balqa Governorate",
+    "type": "Religious & Biblical Tourism",
+    "rating": 4.8,
+    "image_url": "https://images.unsplash.com/photo-1548625149-fc4a29cf7092",
+    "country": "Jordan"
+  },
+  {
+    "name": "St. George Mosaic Church",
+    "location": "Madaba Governorate",
+    "type": "Religious & Biblical Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62",
+    "country": "Jordan"
+  },
+  {
+    "name": "Machaerus (Mawawir Fortress)",
+    "location": "Madaba Governorate",
+    "type": "Religious & Biblical Tourism",
+    "rating": 4.5,
+    "image_url": "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7",
+    "country": "Jordan"
+  },
+  {
+    "name": "Wadi Mujib Biosphere Reserve",
+    "location": "Karak Governorate",
+    "type": "Eco & Adventure Tourism",
+    "rating": 4.9,
+    "image_url": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800",
+    "country": "Jordan"
+  },
+  {
+    "name": "Dana Biosphere Reserve",
+    "location": "Tafilah Governorate",
+    "type": "Eco & Adventure Tourism",
+    "rating": 4.8,
+    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+    "country": "Jordan"
+  },
+  {
+    "name": "Ajloun Forest Reserve",
+    "location": "Ajloun Governorate",
+    "type": "Eco & Adventure Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1448375240586-882707db888b",
+    "country": "Jordan"
+  },
+  {
+    "name": "Wadi Rum Protected Area",
+    "location": "Aqaba Governorate",
+    "type": "Desert & Nature Tourism",
+    "rating": 4.9,
+    "image_url": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9",
+    "country": "Jordan"
+  },
+  {
+    "name": "Quseir Amra",
+    "location": "Zarqa Governorate",
+    "type": "Desert & Nature Tourism",
+    "rating": 4.5,
+    "image_url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+    "country": "Jordan"
+  },
+  {
+    "name": "Qasr al-Kharanah",
+    "location": "Amman Governorate",
+    "type": "Desert & Nature Tourism",
+    "rating": 4.5,
+    "image_url": "https://images.unsplash.com/photo-1518684079-3c830dcef090",
+    "country": "Jordan"
+  },
+  {
+    "name": "Qasr al-Azraq",
+    "location": "Zarqa Governorate",
+    "type": "Desert & Nature Tourism",
+    "rating": 4.4,
+    "image_url": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
+    "country": "Jordan"
+  },
+  {
+    "name": "Aqaba Marine Park & Fort",
+    "location": "Aqaba Governorate",
+    "type": "Coastal & Marine Tourism",
+    "rating": 4.7,
+    "image_url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
+    "country": "Jordan"
+  }
+]
