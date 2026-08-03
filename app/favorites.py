@@ -13,7 +13,7 @@ def add_favorite(user_id, place_id):
                 favorites.c.user_id == user_id,
                 favorites.c.place_id == place_id
             )
-        ).fetchone()
+        ).fetchone() #one  first match in db  , .fetchall() : grab every single matching row in db  
 
         if existing:
             return {"success": False, "message": "Place already in favorites."}

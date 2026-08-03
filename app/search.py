@@ -40,14 +40,3 @@ def search_places(search_term=None, place_type=None, country=None, min_rating=No
         result = conn.execute(stmt)
         return [dict(row._mapping) for row in result]
 
-
-if __name__ == "__main__":
-    print("--- Test 1: Search for 'Petra' ---")
-    petra_results = search_places(search_term="Petra")
-    for place in petra_results:
-        print(place)
-
-    print("\n--- Test 2: Filter by min_rating >= 4.5 ---")
-    top_rated = search_places(min_rating=4.5)
-    for place in top_rated:
-        print(f"{place['name']} - Rating: {place['rating']}")

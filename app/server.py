@@ -141,13 +141,14 @@ def api_get_favorites():
 def api_toggle_favorite():
     user = session.get("user")
     if not user:
-        return jsonify({"success": False, "message": "Please login to save favorites."}), 401
+        return jsonify({"success": False, "message": "Please login to save favorites."}), 401 #Unauthorized
 
     data = request.get_json() or {}
     place_id = data.get("place_id")
 
     if not place_id:
-        return jsonify({"success": False, "message": "Place ID required."}), 400
+        return jsonify({"success": False, "message": "Place ID required."}), 400  # Bad Request
+
 
     user_favs = get_user_favorites(user["id"])
     fav_ids = {f["id"] for f in user_favs}
