@@ -13,10 +13,9 @@ def load_places_from_json():
     with open(json_path, "r", encoding="utf-8") as file:
         data = json.load(file)
 
-    # 3. Insert records into PostgreSQL database
+    # 3. Insert or Update records in PostgreSQL database
     with engine.connect() as conn:
         for item in data:
-            # Check if place already exists by name
             query_exist = conn.execute(
                 select(places).where(places.c.name == item["name"])
             ).fetchone()
@@ -26,7 +25,9 @@ def load_places_from_json():
                 conn.execute(stmt)
                 print(f"Inserted: {item['name']}")
             else:
-                print(f"Already exists: {item['name']}")
+                from sqlalchemy import update
+                stmt = update(places).where(places.c.name == item["name"]).values(**item)
+                conn.execute(stmt)
 
         conn.commit()
 

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Jordan - Discover the Beauty of Jordan</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-cream: #f6f3eb;
+      --bg-card: #ffffff;
+      --primary-terracotta: #b83b26;
+      --primary-hover: #9c2e1b;
+      --navy-header: #132238;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 1.1 Navbar Header */
+    header.main-header {
+      background-color: var(--navy-header);
+      color: #ffffff;
+      padding: 0 2.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Custom Logo Emblem */
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo-emblem {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #ffffff;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
+    }
+
+    nav.nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #ffffff;
+      border-bottom: 2px solid var(--primary-terracotta);
+      border-radius: 0;
+    }
+
+    .btn-logout-nav {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-logout-nav:hover {
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* Main Container */
+    main.app-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .page-view {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    /* Split Screen Auth Cards (Login & Register) */
+    .auth-split-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: var(--shadow-md);
+      min-height: 520px;
+    }
+
+    .auth-banner-side {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 2rem;
+      color: #ffffff;
+    }
+
+    .auth-banner-side::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.8) 100%);
+    }
+
+    .auth-banner-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .banner-logo-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.4rem;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .auth-banner-side h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .auth-banner-side p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .auth-form-side {
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .auth-form-side h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      text-align: center;
+    }
+
+    .auth-form-side p.subtext {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 4px;
+      margin-bottom: 1.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-field {
+      position: relative;
+    }
+
+    .input-field i.icon-left {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .input-field i.icon-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 38px 12px 40px;
+      font-size: 0.9rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: all 0.2s;
+      background-color: #fafafa;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-terracotta);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(184, 59, 38, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      background-color: var(--primary-terracotta);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .auth-switch-text {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .auth-switch-text a {
+      color: var(--primary-terracotta);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .auth-switch-text a:hover {
+      text-decoration: underline;
+    }
+
+    .alert-box {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert-box.error {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .alert-box.success {
+      background-color: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* 2. Search Page & Bar */
+    .title-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .title-header h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .title-header p {
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-size: 0.95rem;
+    }
+
+    .search-card-bar {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2.5rem;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr 1fr;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+
+    .filter-col label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .select-control {
+      width: 100%;
+      padding: 11px 12px;
+      font-size: 0.875rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      outline: none;
+      background-color: #fafafa;
+    }
+
+    .btn-search-action {
+      padding: 12px;
+      background-color: var(--navy-header);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-search-action:hover {
+      background-color: #0f172a;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .place-card-item {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .place-card-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-img-holder {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+    }
+
+    .card-img-holder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .favorite-toggle-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .favorite-toggle-btn.active {
+      color: var(--primary-terracotta);
+      background: #ffffff;
+    }
+
+    .card-body-content {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-item-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .card-item-loc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .card-item-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .card-item-rating {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #d97706;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 1.2 Profile Section */
+    .user-info-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-avatar-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--navy-header);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .user-details h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .user-details p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .empty-fav-state {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #cbd5e1;
+    }
+
+    .empty-fav-icon {
+      width: 46px;
+      height: 46px;
+      background: #fef2f2;
+      color: var(--primary-terracotta);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-fav-state p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 210px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1.1 Navigation Header -->
+  <header class="main-header">
+    <div class="brand-logo" onclick="switchView('search')">
+      <div class="logo-emblem"><i class="fa-solid fa-archway"></i></div>
+      <span>Travel Jordan</span>
+    </div>
+
+    <nav class="nav-menu" id="nav-menu">
+      <button class="nav-link active" id="nav-search" onclick="switchView('search')">Search</button>
+      <button class="nav-link" id="nav-profile" onclick="switchView('profile')"> Profile</button>
+      <button class="btn-logout-nav" id="nav-auth-btn" onclick="handleAuthAction()">
+        <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- App Main Content Area -->
+  <main class="app-main">
+
+    <!-- 1. LOGIN PAGE -->
+    <section class="page-view active" id="view-login">
+      <div class="auth-split-card">
+        <div class="auth-banner-side" style="background-image: url('/static/images/petra_login.png');">
+          <div class="auth-banner-text">
+            <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
+            <h2>Travel Jordan</h2>
+            <p>Discover the beauty of Jordan</p>
+          </div>
+        </div>
+
+        <div class="auth-form-side">
+          <h2>Welcome Back</h2>
+          <p class="subtext">Login to continue</p>
+
+          <div class="alert-box error" id="login-error"></div>
+
+          <form id="login-form" onsubmit="event.preventDefault(); submitLogin();">
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-regular fa-user icon-left"></i>
+                <input type="email" class="form-control" id="login-email" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-solid fa-lock icon-left"></i>
+                <input type="password" class="form-control" id="login-password" placeholder="Password" required>
+                <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('login-password', this)"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Login</button>
+          </form>
+
+          <div class="auth-switch-text">
+            Don't have an account? <a href="#" onclick="switchView('register'); return false;">Register here</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 2. REGISTER PAGE -->
+    <section class="page-view" id="view-register">
+      <div class="auth-split-card">
+        <div class="auth-banner-side" style="background-image: url('/static/images/citadel_register.png');">
+          <div class="auth-banner-text">
+            <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
+            <h2>Travel Jordan</h2>
+            <p>Discover the beauty of Jordan</p>
+          </div>
+        </div>
+
+        <div class="auth-form-side">
+          <h2>Create Account</h2>
+          <p class="subtext">Join us and start exploring</p>
+
+          <div class="alert-box error" id="register-error"></div>
+          <div class="alert-box success" id="register-success"></div>
+
+          <form id="register-form" onsubmit="event.preventDefault(); submitRegister();">
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-regular fa-user icon-left"></i>
+                <input type="text" class="form-control" id="reg-name" placeholder="Full Name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-regular fa-envelope icon-left"></i>
+                <input type="email" class="form-control" id="reg-email" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-solid fa-lock icon-left"></i>
+                <input type="password" class="form-control" id="reg-password" placeholder="Password" required>
+                <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-password', this)"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-solid fa-lock icon-left"></i>
+                <input type="password" class="form-control" id="reg-confirm-password" placeholder="Confirm Password" required>
+                <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-confirm-password', this)"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Register</button>
+          </form>
+
+          <div class="auth-switch-text">
+            Already have an account? <a href="#" onclick="switchView('login'); return false;">Login here</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 3. SEARCH PAGE -->
+    <section class="page-view" id="view-search">
+      <div class="title-header">
+        <h1>Discover Jordan</h1>
+        <p>Find the best places based on your preferences</p>
+      </div>
+
+      <!-- 2. Search Bar & Filter Card -->
+      <div class="search-card-bar">
+        <div class="search-grid">
+          <div class="filter-col">
+            <label>Keyword</label>
+            <input type="text" id="filter-keyword" class="form-control" placeholder="Search for places..." style="padding-left: 14px;">
+          </div>
+
+          <div class="filter-col">
+            <label>Location</label>
+            <select id="filter-location" class="select-control">
+              <option value="All">All Locations</option>
+              <option value="Ma'an">Ma'an Governorate</option>
+              <option value="Amman">Amman</option>
+              <option value="Dead Sea">Dead Sea</option>
+              <option value="Madaba">Madaba</option>
+              <option value="Aqaba">Aqaba</option>
+            </select>
+          </div>
+
+          <div class="filter-col">
+            <label>Place Type</label>
+            <select id="filter-type" class="select-control">
+              <option value="All">All Types</option>
+              <option value="Archaeological Park">Archaeological Park</option>
+              <option value="Historical">Historical</option>
+              <option value="Nature">Nature</option>
+              <option value="Resort">Resort</option>
+            </select>
+          </div>
+
+          <div class="filter-col">
+            <label>Minimum Rating</label>
+            <select id="filter-rating" class="select-control">
+              <option value="">Any Rating</option>
+              <option value="4.5">4.5+ Stars</option>
+              <option value="4.7">4.7+ Stars</option>
+              <option value="4.8">4.8+ Stars</option>
+            </select>
+          </div>
+
+          <button class="btn-search-action" onclick="loadPlaces()"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+        </div>
+      </div>
+
+      <div class="section-title">Popular Places</div>
+      <div class="cards-grid" id="places-container">
+        <!-- Dynamic Cards Loaded via JS -->
+      </div>
+    </section>
+
+
+    <!-- 1.2 PROFILE PAGE -->
+    <section class="page-view" id="view-profile">
+      <div class="section-title">My Information</div>
+      <div class="user-info-card">
+        <div class="user-avatar-circle"><i class="fa-solid fa-user"></i></div>
+        <div class="user-details">
+          <h3 id="profile-name">User Name</h3>
+          <p id="profile-email">user@example.com</p>
+        </div>
+      </div>
+
+      <div class="section-title">My Favorite Places</div>
+      <div class="cards-grid" id="favorites-container">
+        <!-- Dynamic Favorites Loaded via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentUser = null;
+
+    function togglePass(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        field.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    async function checkSession() {
+      try {
+        const res = await fetch('/api/me');
+        const data = await res.json();
+        if (data.logged_in) {
+          currentUser = data.user;
+          document.getElementById('profile-name').textContent = currentUser.name;
+          document.getElementById('profile-email').textContent = currentUser.email;
+          document.getElementById('nav-auth-btn').innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>`;
+        } else {
+          currentUser = null;
+          document.getElementById('nav-auth-btn').innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>`;
+          switchView('login');
+        }
+      } catch (err) {
+        console.error("Session error:", err);
+      }
+      loadPlaces();
+    }
+
+    function switchView(viewName) {
+      document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+
+      const targetPage = document.getElementById('view-' + viewName);
+      if (targetPage) targetPage.classList.add('active');
+
+      const targetNav = document.getElementById('nav-' + viewName);
+      if (targetNav) targetNav.classList.add('active');
+
+      // Hide navbar links on login and register pages (shows logo only)
+      const navMenu = document.getElementById('nav-menu');
+      if (viewName === 'login' || viewName === 'register') {
+        if (navMenu) navMenu.style.display = 'none';
+      } else {
+        if (navMenu) navMenu.style.display = 'flex';
+      }
+
+      if (viewName === 'profile') {
+        if (!currentUser) {
+          switchView('login');
+          return;
+        }
+        loadFavorites();
+      }
+    }
+
+    async function handleAuthAction() {
+      if (currentUser) {
+        await fetch('/api/logout', { method: 'POST' });
+        currentUser = null;
+        document.getElementById('nav-auth-btn').innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>`;
+        switchView('login');
+      } else {
+        switchView('login');
+      }
+    }
+
+    async function loadPlaces() {
+      const keyword = document.getElementById('filter-keyword').value;
+      const location = document.getElementById('filter-location').value;
+      const type = document.getElementById('filter-type').value;
+      const rating = document.getElementById('filter-rating').value;
+
+      let url = `/api/places?search=${encodeURIComponent(keyword)}&location=${encodeURIComponent(location)}&type=${encodeURIComponent(type)}`;
+      if (rating) url += `&min_rating=${rating}`;
+
+      try {
+        const res = await fetch(url);
+        const places = await res.json();
+        renderPlaces(places);
+      } catch (err) {
+        console.error("Load places error:", err);
+      }
+    }
+
+    function renderPlaces(places) {
+      const container = document.getElementById('places-container');
+      if (!places || places.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">No places found matching your criteria.</p>`;
+        return;
+      }
+
+      container.innerHTML = places.map(p => `
+        <div class="place-card-item">
+          <div class="card-img-holder">
+            <img src="${p.image_url || 'https://images.unsplash.com/photo-1579606039800-4740e53a2ef5'}" alt="${p.name}">
+            <button class="favorite-toggle-btn ${p.is_favorite ? 'active' : ''}" onclick="toggleFav(${p.id})">
+              <i class="${p.is_favorite ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+            </button>
+          </div>
+          <div class="card-body-content">
+            <div>
+              <div class="card-item-name">${p.name}</div>
+              <div class="card-item-loc">${p.location || 'Jordan'}</div>
+              <span class="card-item-badge">${p.type || 'Attraction'}</span>
+            </div>
+            <div class="card-item-rating">
+              <i class="fa-solid fa-star"></i> ${p.rating || 'N/A'}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function toggleFav(placeId) {
+      if (!currentUser) {
+        alert("Please login to add places to your favorites.");
+        switchView('login');
+        return;
+      }
+      try {
+        const res = await fetch('/api/favorites/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ place_id: placeId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadPlaces();
+          if (document.getElementById('view-profile').classList.contains('active')) {
+            loadFavorites();
+          }
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadFavorites() {
+      try {
+        const res = await fetch('/api/favorites');
+        const favs = await res.json();
+        const container = document.getElementById('favorites-container');
+
+        if (!favs || favs.length === 0) {
+          container.innerHTML = `
+            <div class="empty-fav-state" style="grid-column: 1/-1;">
+              <div class="empty-fav-icon"><i class="fa-solid fa-heart"></i></div>
+              <p>You can add places to your favorites from the search page.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = favs.map(p => `
+          <div class="place-card-item">
+            <div class="card-img-holder">
+              <img src="${p.image_url}" alt="${p.name}">
+              <button class="favorite-toggle-btn active" onclick="toggleFav(${p.id})">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+            <div class="card-body-content">
+              <div>
+                <div class="card-item-name">${p.name}</div>
+                <div class="card-item-loc">${p.location}</div>
+                <span class="card-item-badge">${p.type}</span>
+              </div>
+              <div class="card-item-rating">
+                <i class="fa-solid fa-star"></i> ${p.rating}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error("Load favs error:", err);
+      }
+    }
+
+    async function submitLogin() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const errBox = document.getElementById('login-error');
+      errBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentUser = data.user;
+          document.getElementById('profile-name').textContent = currentUser.name;
+          document.getElementById('profile-email').textContent = currentUser.email;
+          document.getElementById('nav-auth-btn').innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>`;
+          switchView('search');
+        } else {
+          errBox.textContent = data.message;
+          errBox.style.display = 'block';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function submitRegister() {
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const confirmPass = document.getElementById('reg-confirm-password').value;
+      const errBox = document.getElementById('register-error');
+      const succBox = document.getElementById('register-success');
+
+      errBox.style.display = 'none';
+      succBox.style.display = 'none';
+
+      if (password !== confirmPass) {
+        errBox.textContent = "Passwords do not match!";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          succBox.textContent = data.message + " Redirecting...";
+          succBox.style.display = 'block';
+          setTimeout(() => {
+            checkSession();
+            switchView('search');
+          }, 1000);
+        } else {
+          errBox.textContent = data.message;
+          errBox.style.display = 'block';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Initial load
+    checkSession();
+  </script>
+</body>
+</html>

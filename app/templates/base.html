@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Travel Jordan - Discover the Beauty of Jordan{% endblock %}</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-user-logged-in="{{ 'true' if session.get('user') else 'false' }}">
+
+  <!-- 1.1 Navigation Header -->
+  <header class="main-header">
+    <a class="brand-logo" href="/search">
+      <div class="logo-emblem"><i class="fa-solid fa-archway"></i></div>
+      <span>Travel Jordan</span>
+    </a>
+
+    {% block nav_menu %}
+    <nav class="nav-menu" id="nav-menu">
+      <a class="nav-link {% if active_page == 'search' %}active{% endif %}" href="/search">Search</a>
+      <a class="nav-link {% if active_page == 'profile' %}active{% endif %}" href="/profile">Profile</a>
+      {% if session.get('user') %}
+        <button class="btn-logout-nav" onclick="logoutUser()">
+          <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </button>
+      {% else %}
+        <a class="btn-logout-nav" href="/login">
+          <i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>
+        </a>
+      {% endif %}
+    </nav>
+    {% endblock %}
+  </header>
+
+  <!-- App Main Content Area -->
+  <main class="app-main">
+    <div class="page-view">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <script>
+    async function logoutUser() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/login';
+    }
+
+    function togglePass(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        field.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - Travel Jordan{% endblock %}
+
+{% block content %}
+<div class="section-title">My Information</div>
+<div class="user-info-card">
+  <div class="user-avatar-circle"><i class="fa-solid fa-user"></i></div>
+  <div class="user-details">
+    <h3>{{ user.name if user else 'Traveler' }}</h3>
+    <p>{{ user.email if user else 'user@example.com' }}</p>
+  </div>
+</div>
+
+<div class="section-title">My Favorite Places</div>
+<div class="cards-grid" id="favorites-container">
+  <!-- Dynamic Favorites Loaded via JS -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  async function loadFavorites() {
+    try {
+      const res = await fetch('/api/favorites');
+      const favs = await res.json();
+      const container = document.getElementById('favorites-container');
+
+      if (!favs || favs.length === 0 || favs.message) {
+        container.innerHTML = `
+          <div class="empty-fav-state" style="grid-column: 1/-1;">
+            <div class="empty-fav-icon"><i class="fa-solid fa-heart"></i></div>
+            <p>You can add places to your favorites from the search page.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = favs.map(p => `
+        <div class="place-card-item">
+          <div class="card-img-holder">
+            <img src="${p.image_url}" alt="${p.name}">
+            <button class="favorite-toggle-btn active" onclick="removeFav(${p.id})">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+          <div class="card-body-content">
+            <div>
+              <div class="card-item-name">${p.name}</div>
+              <div class="card-item-loc">${p.location}</div>
+              <span class="card-item-badge">${p.type}</span>
+            </div>
+            <div class="card-item-rating">
+              <i class="fa-solid fa-star"></i> ${p.rating}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (err) {
+      console.error("Load favs error:", err);
+    }
+  }
+
+  async function removeFav(placeId) {
+    try {
+      const res = await fetch('/api/favorites/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ place_id: placeId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        loadFavorites();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  loadFavorites();
+</script>
+{% endblock %}

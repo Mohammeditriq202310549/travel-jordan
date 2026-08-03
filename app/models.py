@@ -24,7 +24,7 @@ places = Table(
     Column("location", String(255)),
     Column("type", String(100)),
     Column("rating", Float),
-    Column("image_url", String(255)),
+    Column("image_url", String(1000)),
     Column("country", String(100)),  
 )
 

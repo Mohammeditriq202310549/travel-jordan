@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Travel Jordan{% endblock %}
+
+{% block nav_menu %}
+<!-- Empty navbar menu on login page (shows logo only) -->
+{% endblock %}
+
+{% block content %}
+<div class="auth-split-card">
+  <div class="auth-banner-side" style="background-image: url('/static/images/petra_login.png');">
+    <div class="auth-banner-text">
+      <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
+      <h2>Travel Jordan</h2>
+      <p>Discover the beauty of Jordan</p>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <h2>Welcome Back</h2>
+    <p class="subtext">Login to continue</p>
+
+    <div class="alert-box error" id="login-error"></div>
+
+    <form id="login-form" onsubmit="event.preventDefault(); submitLogin();">
+      <div class="form-group">
+        <div class="input-field">
+          <i class="fa-regular fa-user icon-left"></i>
+          <input type="email" class="form-control" id="login-email" placeholder="Email" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-field">
+          <i class="fa-solid fa-lock icon-left"></i>
+          <input type="password" class="form-control" id="login-password" placeholder="Password" required>
+          <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('login-password', this)"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <div class="auth-switch-text">
+      Don't have an account? <a href="/register">Register here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  async function submitLogin() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    const errBox = document.getElementById('login-error');
+    errBox.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = '/search';
+      } else {
+        errBox.textContent = data.message;
+        errBox.style.display = 'block';
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Travel Jordan{% endblock %}
+
+{% block nav_menu %}
+<!-- Empty navbar menu on register page (shows logo only) -->
+{% endblock %}
+
+{% block content %}
+<div class="auth-split-card">
+  <div class="auth-banner-side" style="background-image: url('/static/images/citadel_register.png');">
+    <div class="auth-banner-text">
+      <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
+      <h2>Travel Jordan</h2>
+      <p>Discover the beauty of Jordan</p>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <h2>Create Account</h2>
+    <p class="subtext">Join us and start exploring</p>
+
+    <div class="alert-box error" id="register-error"></div>
+    <div class="alert-box success" id="register-success"></div>
+
+    <form id="register-form" onsubmit="event.preventDefault(); submitRegister();">
+      <div class="form-group">
+        <div class="input-field">
+          <i class="fa-regular fa-user icon-left"></i>
+          <input type="text" class="form-control" id="reg-name" placeholder="Full Name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-field">
+          <i class="fa-regular fa-envelope icon-left"></i>
+          <input type="email" class="form-control" id="reg-email" placeholder="Email" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-field">
+          <i class="fa-solid fa-lock icon-left"></i>
+          <input type="password" class="form-control" id="reg-password" placeholder="Password" required>
+          <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-password', this)"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-field">
+          <i class="fa-solid fa-lock icon-left"></i>
+          <input type="password" class="form-control" id="reg-confirm-password" placeholder="Confirm Password" required>
+          <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-confirm-password', this)"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Register</button>
+    </form>
+
+    <div class="auth-switch-text">
+      Already have an account? <a href="/login">Login here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  async function submitRegister() {
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const confirmPass = document.getElementById('reg-confirm-password').value;
+    const errBox = document.getElementById('register-error');
+    const succBox = document.getElementById('register-success');
+
+    errBox.style.display = 'none';
+    succBox.style.display = 'none';
+
+    if (password !== confirmPass) {
+      errBox.textContent = "Passwords do not match!";
+      errBox.style.display = 'block';
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        succBox.textContent = "Registration successful! Redirecting to login page...";
+        succBox.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1200);
+      } else {
+        errBox.textContent = data.message;
+        errBox.style.display = 'block';
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+</script>
+{% endblock %}

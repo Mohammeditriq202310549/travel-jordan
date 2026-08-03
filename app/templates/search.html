@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Search & Explore - Travel Jordan{% endblock %}
+
+{% block content %}
+<div class="title-header">
+  <h1>Discover Jordan</h1>
+  <p>Find the best places based on your preferences</p>
+</div>
+
+<!-- 2. Search Bar & Filter Card -->
+<div class="search-card-bar">
+  <div class="search-grid">
+    <div class="filter-col">
+      <label>Keyword</label>
+      <input type="text" id="filter-keyword" class="form-control" placeholder="Search for places..." style="padding-left: 14px;">
+    </div>
+
+    <div class="filter-col">
+      <label>Location</label>
+      <select id="filter-location" class="select-control">
+        <option value="All">All Locations</option>
+        <option value="Ma'an">Ma'an Governorate</option>
+        <option value="Amman">Amman Governorate</option>
+        <option value="Jerash">Jerash Governorate</option>
+        <option value="Ajloun">Ajloun Governorate</option>
+        <option value="Karak">Karak Governorate</option>
+        <option value="Madaba">Madaba Governorate</option>
+        <option value="Balqa">Balqa Governorate</option>
+        <option value="Aqaba">Aqaba Governorate</option>
+      </select>
+    </div>
+
+    <div class="filter-col">
+      <label>Place Type</label>
+      <select id="filter-type" class="select-control">
+        <option value="All">All Types</option>
+        <option value="Historical">Historical</option>
+        <option value="Nature">Nature</option>
+        <option value="Wellness">Wellness</option>
+        <option value="Religious">Religious</option>
+        <option value="Resort">Resort</option>
+      </select>
+    </div>
+
+    <div class="filter-col">
+      <label>Minimum Rating</label>
+      <select id="filter-rating" class="select-control">
+        <option value="">Any Rating</option>
+        <option value="4.5">4.5+ Stars</option>
+        <option value="4.7">4.7+ Stars</option>
+        <option value="4.8">4.8+ Stars</option>
+      </select>
+    </div>
+
+    <button class="btn-search-action" onclick="loadPlaces()"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+  </div>
+</div>
+
+<div class="section-title">Popular Places</div>
+<div class="cards-grid" id="places-container">
+  <!-- Dynamic Cards Loaded via JS -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  var isLoggedIn = document.body.getAttribute('data-user-logged-in') === 'true';
+
+  async function loadPlaces() {
+    var keyword = document.getElementById('filter-keyword').value;
+    var location = document.getElementById('filter-location').value;
+    var type = document.getElementById('filter-type').value;
+    var rating = document.getElementById('filter-rating').value;
+
+    var url = '/api/places?search=' + encodeURIComponent(keyword) + '&location=' + encodeURIComponent(location) + '&type=' + encodeURIComponent(type);
+    if (rating) {
+      url += '&min_rating=' + rating;
+    }
+
+    try {
+      var res = await fetch(url);
+      var places = await res.json();
+      renderPlaces(places);
+    } catch (err) {
+      console.error('Load places error:', err);
+    }
+  }
+
+  function renderPlaces(places) {
+    const container = document.getElementById('places-container');
+    if (!places || places.length === 0) {
+      container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">No places found matching your criteria.</p>';
+      return;
+    }
+
+    container.innerHTML = places.map(p => `
+      <div class="place-card-item">
+        <div class="card-img-holder">
+          <img src="${p.image_url || 'https://images.unsplash.com/photo-1579606039800-4740e53a2ef5'}" alt="${p.name}">
+          <button class="favorite-toggle-btn ${p.is_favorite ? 'active' : ''}" onclick="toggleFav(${p.id})">
+            <i class="${p.is_favorite ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+          </button>
+        </div>
+        <div class="card-body-content">
+          <div>
+            <div class="card-item-name">${p.name}</div>
+            <div class="card-item-loc">${p.location || 'Jordan'}</div>
+            <span class="card-item-badge">${p.type || 'Attraction'}</span>
+          </div>
+          <div class="card-item-rating">
+            <i class="fa-solid fa-star"></i> ${p.rating || 'N/A'}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function toggleFav(placeId) {
+    if (!isLoggedIn) {
+      alert('Please login to add places to your favorites.');
+      window.location.href = '/login';
+      return;
+    }
+    try {
+      var res = await fetch('/api/favorites/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ place_id: placeId })
+      });
+      var data = await res.json();
+      if (data.success) {
+        loadPlaces();
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // Initial load
+  loadPlaces();
+</script>
+{% endblock %}
