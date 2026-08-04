@@ -1,145 +1,231 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search & Explore - Travel Jordan</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
 
-{% block title %}Search & Explore - Travel Jordan{% endblock %}
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <a class="brand-logo" href="/search">
+      <div class="logo-emblem"><i class="fa-solid fa-archway"></i></div>
+      <span>Travel Jordan</span>
+    </a>
 
-{% block content %}
-<div class="title-header">
-  <h1>Discover Jordan</h1>
-  <p>Find the best places based on your preferences</p>
-</div>
+    <nav class="nav-menu" id="nav-menu">
+      <a class="nav-link active" href="/search">Search</a>
+      <a class="nav-link" href="/profile">Profile</a>
+      <div id="auth-nav-action" style="display: inline-block;">
+        <!-- Dynamic Login/Logout Button via JS -->
+      </div>
+    </nav>
+  </header>
 
-<!-- 2. Search Bar & Filter Card -->
-<div class="search-card-bar">
-  <div class="search-grid">
-    <div class="filter-col">
-      <label>Keyword</label>
-      <input type="text" id="filter-keyword" class="form-control" placeholder="Search for places..." style="padding-left: 14px;">
-    </div>
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="page-view">
+      <div class="title-header">
+        <h1>Discover Jordan</h1>
+        <p>Find the best places based on your preferences</p>
+      </div>
 
-    <div class="filter-col">
-      <label>Location</label>
-      <select id="filter-location" class="select-control">
-        <option value="All">All Locations</option>
-        <option value="Ma'an">Ma'an Governorate</option>
-        <option value="Amman">Amman Governorate</option>
-        <option value="Jerash">Jerash Governorate</option>
-        <option value="Ajloun">Ajloun Governorate</option>
-        <option value="Karak">Karak Governorate</option>
-        <option value="Madaba">Madaba Governorate</option>
-        <option value="Balqa">Balqa Governorate</option>
-        <option value="Aqaba">Aqaba Governorate</option>
-      </select>
-    </div>
-
-    <div class="filter-col">
-      <label>Place Type</label>
-      <select id="filter-type" class="select-control">
-        <option value="All">All Types</option>
-        <option value="Historical">Historical</option>
-        <option value="Nature">Nature</option>
-        <option value="Wellness">Wellness</option>
-        <option value="Religious">Religious</option>
-        <option value="Resort">Resort</option>
-      </select>
-    </div>
-
-    <div class="filter-col">
-      <label>Minimum Rating</label>
-      <select id="filter-rating" class="select-control">
-        <option value="">Any Rating</option>
-        <option value="4.5">4.5+ Stars</option>
-        <option value="4.7">4.7+ Stars</option>
-        <option value="4.8">4.8+ Stars</option>
-      </select>
-    </div>
-
-    <button class="btn-search-action" onclick="loadPlaces()"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-  </div>
-</div>
-
-<div class="section-title">Popular Places</div>
-<div class="cards-grid" id="places-container">
-  <!-- Dynamic Cards Loaded via JS -->
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-  var isLoggedIn = document.body.getAttribute('data-user-logged-in') === 'true';
-
-  async function loadPlaces() {
-    var keyword = document.getElementById('filter-keyword').value;
-    var location = document.getElementById('filter-location').value;
-    var type = document.getElementById('filter-type').value;
-    var rating = document.getElementById('filter-rating').value;
-
-    var url = '/api/places?search=' + encodeURIComponent(keyword) + '&location=' + encodeURIComponent(location) + '&type=' + encodeURIComponent(type);
-    if (rating) {
-      url += '&min_rating=' + rating;
-    }
-
-    try {
-      var res = await fetch(url);
-      var places = await res.json();
-      renderPlaces(places);
-    } catch (err) {
-      console.error('Load places error:', err);
-    }
-  }
-
-  function renderPlaces(places) {
-    const container = document.getElementById('places-container');
-    if (!places || places.length === 0) {
-      container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">No places found matching your criteria.</p>';
-      return;
-    }
-
-    container.innerHTML = places.map(p => `
-      <div class="place-card-item">
-        <div class="card-img-holder">
-          <img src="${p.image_url || 'https://images.unsplash.com/photo-1579606039800-4740e53a2ef5'}" alt="${p.name}">
-          <button class="favorite-toggle-btn ${p.is_favorite ? 'active' : ''}" onclick="toggleFav(${p.id})">
-            <i class="${p.is_favorite ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-          </button>
-        </div>
-        <div class="card-body-content">
-          <div>
-            <div class="card-item-name">${p.name}</div>
-            <div class="card-item-loc">${p.location || 'Jordan'}</div>
-            <span class="card-item-badge">${p.type || 'Attraction'}</span>
+      <!-- Search Bar & Filter Card -->
+      <div class="search-card-bar">
+        <div class="search-grid">
+          <div class="filter-col">
+            <label>Keyword</label>
+            <input type="text" id="filter-keyword" class="form-control" placeholder="Search for places..." style="padding-left: 14px;">
           </div>
-          <div class="card-item-rating">
-            <i class="fa-solid fa-star"></i> ${p.rating || 'N/A'}
+
+          <div class="filter-col">
+            <label>Location</label>
+            <select id="filter-location" class="select-control">
+              <!-- Options Populated via JS -->
+            </select>
           </div>
+
+          <div class="filter-col">
+            <label>Place Type</label>
+            <select id="filter-type" class="select-control">
+              <!-- Options Populated via JS -->
+            </select>
+          </div>
+
+          <div class="filter-col">
+            <label>Minimum Rating</label>
+            <select id="filter-rating" class="select-control">
+              <!-- Options Populated via JS -->
+            </select>
+          </div>
+
+          <button class="btn-search-action" onclick="loadPlaces()"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
         </div>
       </div>
-    `).join('');
-  }
 
-  async function toggleFav(placeId) {
-    if (!isLoggedIn) {
-      alert('Please login to add places to your favorites.');
-      window.location.href = '/login';
-      return;
+      <div class="section-title">Popular Places</div>
+      <div class="cards-grid" id="places-container">
+        <!-- Dynamic Cards Loaded via JS -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let isLoggedIn = false;
+
+    // Filter Options Data Arrays in JS
+    const locationOptions = [
+      { value: "All", label: "All Locations" },
+      { value: "Ma'an", label: "Ma'an Governorate" },
+      { value: "Amman", label: "Amman Governorate" },
+      { value: "Jerash", label: "Jerash Governorate" },
+      { value: "Ajloun", label: "Ajloun Governorate" },
+      { value: "Karak", label: "Karak Governorate" },
+      { value: "Madaba", label: "Madaba Governorate" },
+      { value: "Balqa", label: "Balqa Governorate" },
+      { value: "Aqaba", label: "Aqaba Governorate" }
+    ];
+
+    const typeOptions = [
+      { value: "All", label: "All Types" },
+      { value: "Historical", label: "Historical" },
+      { value: "Nature", label: "Nature" },
+      { value: "Wellness", label: "Wellness" },
+      { value: "Religious", label: "Religious" },
+      { value: "Resort", label: "Resort" }
+    ];
+
+    const ratingOptions = [
+      { value: "", label: "Any Rating" },
+      { value: "4.5", label: "4.5+ Stars" },
+      { value: "4.7", label: "4.7+ Stars" },
+      { value: "4.8", label: "4.8+ Stars" }
+    ];
+
+    // Populate Select Options Dynamically
+    function initSelectOptions() {
+      const locSelect = document.getElementById('filter-location');
+      locSelect.innerHTML = locationOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
+
+      const typeSelect = document.getElementById('filter-type');
+      typeSelect.innerHTML = typeOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
+
+      const ratingSelect = document.getElementById('filter-rating');
+      ratingSelect.innerHTML = ratingOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
     }
-    try {
-      var res = await fetch('/api/favorites/toggle', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ place_id: placeId })
-      });
-      var data = await res.json();
-      if (data.success) {
-        loadPlaces();
-      } else {
-        alert(data.message);
+
+    async function checkAuthSession() {
+      try {
+        const res = await fetch('/api/me');
+        const data = await res.json();
+        isLoggedIn = data.logged_in;
+
+        const navAction = document.getElementById('auth-nav-action');
+        if (isLoggedIn) {
+          navAction.innerHTML = `
+            <button class="btn-logout-nav" onclick="logoutUser()">
+              <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+            </button>
+          `;
+        } else {
+          navAction.innerHTML = `
+            <a class="btn-logout-nav" href="/login">
+              <i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>
+            </a>
+          `;
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
-  }
 
-  // Initial load
-  loadPlaces();
-</script>
-{% endblock %}
+    async function logoutUser() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/login';
+    }
+
+    async function loadPlaces() {
+      const keyword = document.getElementById('filter-keyword').value;
+      const location = document.getElementById('filter-location').value;
+      const type = document.getElementById('filter-type').value;
+      const rating = document.getElementById('filter-rating').value;
+
+      let url = '/api/places?search=' + encodeURIComponent(keyword) + '&location=' + encodeURIComponent(location) + '&type=' + encodeURIComponent(type);
+      if (rating) url += '&min_rating=' + rating;
+
+      try {
+        const res = await fetch(url);
+        const places = await res.json();
+        renderPlaces(places);
+      } catch (err) {
+        console.error("Load places error:", err);
+      }
+    }
+
+    function renderPlaces(places) {
+      const container = document.getElementById('places-container');
+      if (!places || places.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">No places found matching your criteria.</p>';
+        return;
+      }
+
+      container.innerHTML = places.map(p => `
+        <div class="place-card-item">
+          <div class="card-img-holder">
+            <img src="${p.image_url || 'https://images.unsplash.com/photo-1579606039800-4740e53a2ef5'}" alt="${p.name}">
+            <button class="favorite-toggle-btn ${p.is_favorite ? 'active' : ''}" onclick="toggleFav(${p.id})">
+              <i class="${p.is_favorite ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+            </button>
+          </div>
+          <div class="card-body-content">
+            <div>
+              <div class="card-item-name">${p.name}</div>
+              <div class="card-item-loc">${p.location || 'Jordan'}</div>
+              <span class="card-item-badge">${p.type || 'Attraction'}</span>
+            </div>
+            <div class="card-item-rating">
+              <i class="fa-solid fa-star"></i> ${p.rating || 'N/A'}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function toggleFav(placeId) {
+      if (!isLoggedIn) {
+        alert("Please login to add places to your favorites.");
+        window.location.href = '/login';
+        return;
+      }
+      try {
+        const res = await fetch('/api/favorites/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ place_id: placeId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadPlaces();
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Initialize page
+    initSelectOptions();
+    checkAuthSession();
+    loadPlaces();
+  </script>
+</body>
+</html>

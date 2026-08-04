@@ -1,77 +1,125 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Travel Jordan</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
 
-{% block title %}Login - Travel Jordan{% endblock %}
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <a class="brand-logo" href="/search">
+      <div class="logo-emblem"><i class="fa-solid fa-archway"></i></div>
+      <span>Travel Jordan</span>
+    </a>
 
-{% block nav_menu %}
-<!-- Empty navbar menu on login page (shows logo only) -->
-{% endblock %}
+    <nav class="nav-menu" id="nav-menu">
+      <a class="nav-link" href="/search">Search</a>
+      <a class="btn-logout-nav" href="/login">
+        <i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>
+      </a>
+    </nav>
+  </header>
 
-{% block content %}
-<div class="auth-split-card">
-  <div class="auth-banner-side" style="background-image: url('/static/images/petra_login.png');">
-    <div class="auth-banner-text">
-      <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
-      <h2>Travel Jordan</h2>
-      <p>Discover the beauty of Jordan</p>
-    </div>
-  </div>
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="page-view">
+      <div class="auth-split-card">
+        <div class="auth-banner-side" style="background-image: url('/static/images/petra_login.png');">
+          <div class="auth-banner-text">
+            <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
+            <p style="font-size: 1.5rem; font-weight: 700; margin: 0;">Travel Jordan</p>
+            <p>Discover the beauty of Jordan</p>
+          </div>
+        </div>
 
-  <div class="auth-form-side">
-    <h2>Welcome Back</h2>
-    <p class="subtext">Login to continue</p>
+        <div class="auth-form-side">
+          <h1>Welcome Back</h1>
+          <p class="subtext">Login to continue</p>
 
-    <div class="alert-box error" id="login-error"></div>
+          <div class="alert-box error" id="login-error"></div>
 
-    <form id="login-form" onsubmit="event.preventDefault(); submitLogin();">
-      <div class="form-group">
-        <div class="input-field">
-          <i class="fa-regular fa-user icon-left"></i>
-          <input type="email" class="form-control" id="login-email" placeholder="Email" required>
+          <form id="login-form" onsubmit="event.preventDefault(); submitLogin();">
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-regular fa-user icon-left"></i>
+                <input type="email" class="form-control" id="login-email" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-solid fa-lock icon-left"></i>
+                <input type="password" class="form-control" id="login-password" placeholder="Password" required>
+                <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('login-password', this)"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Login</button>
+          </form>
+
+          <div class="auth-switch-text">
+            Don't have an account? <a href="/register">Register here</a>
+          </div>
         </div>
       </div>
-
-      <div class="form-group">
-        <div class="input-field">
-          <i class="fa-solid fa-lock icon-left"></i>
-          <input type="password" class="form-control" id="login-password" placeholder="Password" required>
-          <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('login-password', this)"></i>
-        </div>
-      </div>
-
-      <button type="submit" class="btn-submit">Login</button>
-    </form>
-
-    <div class="auth-switch-text">
-      Don't have an account? <a href="/register">Register here</a>
     </div>
-  </div>
-</div>
-{% endblock %}
+  </main>
 
-{% block scripts %}
-<script>
-  async function submitLogin() {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const errBox = document.getElementById('login-error');
-    errBox.style.display = 'none';
-
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      if (data.success) {
-        window.location.href = '/search';
+  <script>
+    function togglePass(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
       } else {
-        errBox.textContent = data.message;
-        errBox.style.display = 'block';
+        field.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
       }
-    } catch (err) {
-      console.error(err);
     }
-  }
-</script>
-{% endblock %}
+
+    function isValidEmail(email) {
+      const emailRegex = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+      return emailRegex.test(email);
+    }
+
+    async function submitLogin() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const errBox = document.getElementById('login-error');
+      errBox.style.display = 'none';
+
+      if (!isValidEmail(email)) {
+        errBox.textContent = 'Please enter a valid email address (e.g., user@example.com).';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = '/search';
+        } else {
+          errBox.textContent = data.message;
+          errBox.style.display = 'block';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>

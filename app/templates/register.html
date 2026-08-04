@@ -1,108 +1,134 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Travel Jordan</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
 
-{% block title %}Register - Travel Jordan{% endblock %}
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <a class="brand-logo" href="/search">
+      <div class="logo-emblem"><i class="fa-solid fa-archway"></i></div>
+      <span>Travel Jordan</span>
+    </a>
 
-{% block nav_menu %}
-<!-- Empty navbar menu on register page (shows logo only) -->
-{% endblock %}
+    <nav class="nav-menu" id="nav-menu">
+      <a class="nav-link" href="/search">Search</a>
+      <a class="btn-logout-nav" href="/login">
+        <i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>
+      </a>
+    </nav>
+  </header>
 
-{% block content %}
-<div class="auth-split-card">
-  <div class="auth-banner-side" style="background-image: url('/static/images/citadel_register.png');">
-    <div class="auth-banner-text">
-      <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
-      <h2>Travel Jordan</h2>
-      <p>Discover the beauty of Jordan</p>
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="page-view">
+      <div class="auth-split-card">
+        <div class="auth-banner-side" style="background-image: url('/static/images/citadel_register.png');">
+          <div class="auth-banner-text">
+            <div class="banner-logo-icon"><i class="fa-solid fa-archway"></i></div>
+            <p style="font-size: 1.5rem; font-weight: 700; margin: 0;">Travel Jordan</p>
+            <p>Discover the beauty of Jordan</p>
+          </div>
+        </div>
+
+        <div class="auth-form-side">
+          <h1>Create Account</h1>
+          <p class="subtext">Join us and start exploring</p>
+
+          <div class="alert-box error" id="register-error"></div>
+
+          <form id="register-form" onsubmit="event.preventDefault(); submitRegister();">
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-regular fa-user icon-left"></i>
+                <input type="text" class="form-control" id="reg-name" placeholder="Full Name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-regular fa-envelope icon-left"></i>
+                <input type="email" class="form-control" id="reg-email" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-field">
+                <i class="fa-solid fa-lock icon-left"></i>
+                <input type="password" class="form-control" id="reg-password" placeholder="Password (min 6 chars)" required minlength="6">
+                <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-password', this)"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Register</button>
+          </form>
+
+          <div class="auth-switch-text">
+            Already have an account? <a href="/login">Login here</a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 
-  <div class="auth-form-side">
-    <h2>Create Account</h2>
-    <p class="subtext">Join us and start exploring</p>
-
-    <div class="alert-box error" id="register-error"></div>
-    <div class="alert-box success" id="register-success"></div>
-
-    <form id="register-form" onsubmit="event.preventDefault(); submitRegister();">
-      <div class="form-group">
-        <div class="input-field">
-          <i class="fa-regular fa-user icon-left"></i>
-          <input type="text" class="form-control" id="reg-name" placeholder="Full Name" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="input-field">
-          <i class="fa-regular fa-envelope icon-left"></i>
-          <input type="email" class="form-control" id="reg-email" placeholder="Email" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="input-field">
-          <i class="fa-solid fa-lock icon-left"></i>
-          <input type="password" class="form-control" id="reg-password" placeholder="Password" required>
-          <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-password', this)"></i>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="input-field">
-          <i class="fa-solid fa-lock icon-left"></i>
-          <input type="password" class="form-control" id="reg-confirm-password" placeholder="Confirm Password" required>
-          <i class="fa-regular fa-eye icon-toggle" onclick="togglePass('reg-confirm-password', this)"></i>
-        </div>
-      </div>
-
-      <button type="submit" class="btn-submit">Register</button>
-    </form>
-
-    <div class="auth-switch-text">
-      Already have an account? <a href="/login">Login here</a>
-    </div>
-  </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-  async function submitRegister() {
-    const name = document.getElementById('reg-name').value;
-    const email = document.getElementById('reg-email').value;
-    const password = document.getElementById('reg-password').value;
-    const confirmPass = document.getElementById('reg-confirm-password').value;
-    const errBox = document.getElementById('register-error');
-    const succBox = document.getElementById('register-success');
-
-    errBox.style.display = 'none';
-    succBox.style.display = 'none';
-
-    if (password !== confirmPass) {
-      errBox.textContent = "Passwords do not match!";
-      errBox.style.display = 'block';
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ name, email, password })
-      });
-      const data = await res.json();
-      if (data.success) {
-        succBox.textContent = "Registration successful! Redirecting to login page...";
-        succBox.style.display = 'block';
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 1200);
+  <script>
+    function togglePass(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
       } else {
-        errBox.textContent = data.message;
-        errBox.style.display = 'block';
+        field.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
       }
-    } catch (err) {
-      console.error(err);
     }
-  }
-</script>
-{% endblock %}
+
+    function isValidEmail(email) {
+      const emailRegex = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+      return emailRegex.test(email);
+    }
+
+    async function submitRegister() {
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const errBox = document.getElementById('register-error');
+      errBox.style.display = 'none';
+
+      if (!isValidEmail(email)) {
+        errBox.textContent = 'Please enter a valid email address (e.g., user@example.com).';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Registration successful! Please login to your account.');
+          window.location.href = '/login';
+        } else {
+          errBox.textContent = data.message;
+          errBox.style.display = 'block';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>

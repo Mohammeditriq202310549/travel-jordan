@@ -1,6 +1,6 @@
 from sqlalchemy import select, insert, delete
-from app.db import engine
-from app.models import favorites, places
+from db import engine
+from models import favorites, places
 
 
 def add_favorite(user_id, place_id):

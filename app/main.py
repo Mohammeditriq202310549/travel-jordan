@@ -1,8 +1,8 @@
 import json
 import os
 from sqlalchemy import insert, select
-from app.db import engine
-from app.models import places
+from db import engine
+from models import places
 
 
 def load_places_from_json():

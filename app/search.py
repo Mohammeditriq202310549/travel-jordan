@@ -1,6 +1,6 @@
 from sqlalchemy import select, or_, and_
-from app.db import engine
-from app.models import places
+from db import engine
+from models import places
 
 
 def search_places(search_term=None, place_type=None, country=None, min_rating=None):

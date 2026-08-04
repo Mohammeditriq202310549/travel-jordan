@@ -1,11 +1,11 @@
 import os
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-from app.db import engine
-from app.models import places
-from app.main import load_places_from_json
-from app.search import search_places
-from app.auth import register_user, login_user
-from app.favorites import add_favorite, remove_favorite, get_user_favorites
+from db import engine
+from models import places
+from main import load_places_from_json
+from search import search_places
+from auth import register_user, login_user
+from favorites import add_favorite, remove_favorite, get_user_favorites
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = "super-secret-jordan-travel-key-12345"
@@ -43,15 +43,12 @@ def view_register():
 
 @app.route("/search")
 def view_search():
-    return render_template("search.html", active_page="search")
+    return render_template("search.html")
 
 
 @app.route("/profile")
 def view_profile():
-    user = session.get("user")
-    if not user:
-        return redirect(url_for("view_login"))
-    return render_template("profile.html", user=user, active_page="profile")
+    return render_template("profile.html")
 
 
 # API Routes

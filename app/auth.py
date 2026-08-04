@@ -1,8 +1,18 @@
 import re
 from sqlalchemy import select, insert
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.db import engine
-from app.models import users
+from db import engine
+from models import users
+
+
+def validate_email(email):
+    """
+    Validates email format using Python re.compile Regex function: recipient@domain.ext (e.g. user@domain.com)
+    """
+    email_regex = re.compile(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+    if not email or not email_regex.search(email):
+        return False, "Please enter a valid email address (e.g., user@example.com)."
+    return True, "Email is valid."
 
 
 def validate_password(password):
@@ -29,8 +39,13 @@ def validate_password(password):
 
 def register_user(name, email, password):
     """
-    Registers a new user into the database with password validation.
+    Registers a new user into the database with password and email validation.
     """
+    # 0. Validate email format
+    is_email_valid, email_msg = validate_email(email)
+    if not is_email_valid:
+        return {"success": False, "message": email_msg}
+
     # 1. Validate password strength
     is_valid, val_msg = validate_password(password)
     if not is_valid:
@@ -64,6 +79,10 @@ def login_user(email, password):
     """
     Authenticates a user against stored email and hashed password.
     """
+    is_email_valid, email_msg = validate_email(email)
+    if not is_email_valid:
+        return {"success": False, "message": email_msg}
+
     with engine.connect() as conn:
         # 1. Fetch user by email
         user_row = conn.execute(
