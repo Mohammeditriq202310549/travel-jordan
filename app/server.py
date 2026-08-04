@@ -6,6 +6,14 @@ from main import load_places_from_json
 from search import search_places
 from auth import register_user, login_user
 from favorites import add_favorite, remove_favorite, get_user_favorites
+from exceptions import (
+    log_exception,
+    AppBaseException,
+    DatabaseException,
+    AuthenticationException,
+    ValidationException,
+    ResourceNotFoundException
+)
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = "super-secret-jordan-travel-key-12345"
@@ -16,7 +24,20 @@ def ensure_database_seeded():
     try:
         load_places_from_json()
     except Exception as e:
-        print("Database seed check:", e)
+        log_exception(e, context="DatabaseSeeding")
+
+
+# Global Exception Handlers
+@app.errorhandler(AppBaseException)
+def handle_app_exception(error):
+    log_exception(error, context=request.path)
+    return jsonify({"success": False, "message": error.message}), error.status_code
+
+
+@app.errorhandler(Exception)
+def handle_generic_exception(error):
+    log_exception(error, context=request.path)
+    return jsonify({"success": False, "message": "An unexpected error occurred. Please try again later."}), 500
 
 
 # View Routes (Renders Individual Templates)

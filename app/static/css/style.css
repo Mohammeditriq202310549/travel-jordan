@@ -56,8 +56,8 @@ header.main-header {
   width: 2.25rem;
   height: 2.25rem;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,7 +97,7 @@ nav.nav-menu {
 
 .btn-logout-nav {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
   border-radius: 0.5rem;
   padding: 0.4375rem 1rem;
@@ -177,7 +177,7 @@ main.app-main {
   justify-content: center;
   margin: 0 auto 1rem;
   font-size: 1.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
 }
 
 .auth-banner-side h2 {
@@ -244,7 +244,7 @@ main.app-main {
   width: 100%;
   padding: 0.75rem 2.375rem 0.75rem 2.5rem;
   font-size: 0.9rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md);
   outline: none;
   transition: all 0.2s;
@@ -303,13 +303,13 @@ main.app-main {
 .alert-box.error {
   background-color: #fef2f2;
   color: #991b1b;
-  border: 1px solid #fecaca;
+  border: 0.0625rem solid #fecaca;
 }
 
 .alert-box.success {
   background-color: #f0fdf4;
   color: #166534;
-  border: 1px solid #bbf7d0;
+  border: 0.0625rem solid #bbf7d0;
 }
 
 /* 2. Search Page & Bar */
@@ -349,7 +349,7 @@ main.app-main {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03125rem;
   color: var(--text-muted);
   margin-bottom: 0.375rem;
   display: block;
@@ -359,7 +359,7 @@ main.app-main {
   width: 100%;
   padding: 0.6875rem 0.75rem;
   font-size: 0.875rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md);
   outline: none;
   background-color: #fafafa;
@@ -404,7 +404,7 @@ main.app-main {
 }
 
 .place-card-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-0.25rem);
   box-shadow: var(--shadow-md);
 }
 
@@ -527,7 +527,7 @@ main.app-main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #cbd5e1;
+  border: 0.125rem dashed #cbd5e1;
 }
 
 .empty-fav-icon {
@@ -546,6 +546,6 @@ main.app-main {
 .empty-fav-state p {
   font-size: 0.85rem;
   color: var(--text-muted);
-  max-width: 210px;
+  max-width: 13.125rem;
   line-height: 1.4;
 }
